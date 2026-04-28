@@ -3,6 +3,7 @@ import { useLoaderData, Link } from "react-router";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
 import Swal from "sweetalert2";
 import BidProduct from "./BidProduct";
+import axios from "axios";
 
 const ProductDetails = () => {
   const { user } = use(AuthContext);
@@ -30,12 +31,25 @@ const ProductDetails = () => {
   } = product;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/bids/${_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBids(data);
-      });
-  }, [_id]);
+    axios.get(`https://smart-deals-server-eight-xi.vercel.app/products/bids/${_id}`)
+    .then(data => {
+        setBids(data.data);
+    })
+  })
+
+//   useEffect(() => {
+//     fetch(`https://smart-deals-server-eight-xi.vercel.app/products/bids/${_id}`, {
+//         headers: {
+//             authorization: `Bearer ${user.accessToken}`
+//             // authorization: `Bearer ${localStorage.getItem('token')}`
+//         }
+//     })
+//       .then((res) => res.json())
+//       .then((data) => {
+//         setBids(data);
+//       });
+//   }, [_id]);
+
   const handleBidModal = () => {
     modalOpen.current.showModal();
   };
@@ -50,7 +64,7 @@ const ProductDetails = () => {
     const photo = form.photo.value;
     const price = parseInt(form.price.value);
     const contact = form.contact.value;
-console.log(price);
+    console.log(price);
     const newBid = {
       product: _id,
       buyer_image: photo,
@@ -60,10 +74,9 @@ console.log(price);
       bid_price: price,
       status: "pending",
     };
-    console.log(newBid);
 
     // Bid data send to the Database via server
-    fetch("http://localhost:3000/bids", {
+    fetch("https://smart-deals-server-eight-xi.vercel.app/bids", {
       method: "POST",
       headers: {
         "content-type": "application/json",

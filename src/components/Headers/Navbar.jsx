@@ -16,6 +16,18 @@ const Navbar = () => {
         console.log(error.code);
       });
   };
+  const navLinks = (
+    <>
+      <MyLink to={"/"}>Home</MyLink>
+      <MyLink to={"/all-products"}>All Products</MyLink>
+      {
+        user && <>
+        {/* <MyLink to={"/my-products"}>My Products</MyLink> */}
+      <MyLink to={"/my-bids"}>My Bids</MyLink>
+      <MyLink to={"/create-product"}>Create Product</MyLink></>
+      }
+    </>
+  );
   return (
     <div className="bg-base-100 shadow-sm">
       <div className="navbar w-11/12 mx-auto px-0">
@@ -42,34 +54,14 @@ const Navbar = () => {
               tabIndex="-1"
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              <MyLink to={"/"}>Home</MyLink>
-              <MyLink to={"/all-products"}>All Products</MyLink>
-              <MyLink to={"/my-products"}>My Products</MyLink>
-              <MyLink to={"/my-bids"}>My Bids</MyLink>
-              <MyLink to={"/create-product"}>Create Product</MyLink>
+              {navLinks}
             </ul>
           </div>
-          <a className="font-bold text-2xl">
+          <Link to={"/"} className="font-bold text-2xl">
             Smart<span className="primary-text">Deals</span>
-          </a>
+          </Link>
         </div>
-        <div className="navbar-center hidden lg:flex gap-3">
-          <MyLink to={"/"} className="">
-            Home
-          </MyLink>
-          <MyLink to={"/all-products"} className="">
-            All Products
-          </MyLink>
-          <MyLink to={"/my-products"} className="">
-            My Products
-          </MyLink>
-          <MyLink to={"/my-bids"} className="">
-            My Bids
-          </MyLink>
-          <MyLink to={"/create-product"} className="">
-            Create Product
-          </MyLink>
-        </div>
+        <div className="navbar-center hidden lg:flex gap-3">{navLinks}</div>
         {loading ? (
           <div className="navbar-end gap-2">
             <ClockLoader size={36} color="#FB4231" />

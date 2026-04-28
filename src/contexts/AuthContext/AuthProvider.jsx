@@ -76,6 +76,21 @@ const signInWithGithub = () => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     //   console.log(currentUser);
+    // if(currentUser) {
+    //     const loggedUser = {email: currentUser.email};
+    //     fetch("https://smart-deals-server-eight-xi.vercel.app/getToken", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify(loggedUser)
+    //     })
+    //     .then(res=> res.json())
+    //     .then(data => {
+    //         // console.log("after getting token", data.token);
+    //         localStorage.setItem("token", data.token)
+    //     })
+    // }
       setLoading(false);
     });
     return () => {
